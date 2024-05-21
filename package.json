@@ -1,0 +1,95 @@
+{
+  "name": "thebettercodersmartfileopener",
+  "displayName": "SmartFileOpener",
+  "description": "Recommend files to open based on current file and git commit history.",
+  "version": "0.1.2",
+  "publisher": "TheBetterCoder",
+  "icon": "images/logo.webp",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:smartFileOpener.openAllRecommended",
+    "onCommand:smartFileOpener.showRecommended"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "smartFileOpener.openAllRecommended",
+        "title": "Smart File Opener: Open all recommended files"
+      },
+      {
+        "command": "smartFileOpener.showRecommended",
+        "title": "Smart File Opener: Show recommended files to open"
+      }
+    ],
+    "views": {
+      "explorer": [
+          {
+              "id": "smartFileOpenerView",
+              "name": "Smart File Opener"
+          }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Smart File Opener Configuration",
+      "properties": {
+        "smartFileOpener.commitLimit": {
+          "type": "number",
+          "default": 100,
+          "description": "Limit of git commits to scan"
+        },
+        "smartFileOpener.maxFilesToOpen": {
+          "type": "number",
+          "enum": [
+            5,
+            10,
+            20,
+            -1
+          ],
+          "default": 5,
+          "description": "Number of files to open when using 'Open all recommended files' (5, 10, 20, or -1 for all)"
+        },
+        "smartFileOpener.autoUpdate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically update recommendations based on the current file"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "smartFileOpener.openAllRecommended",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
+      },
+      {
+        "command": "smartFileOpener.showRecommended",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "simple-git": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.89.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
